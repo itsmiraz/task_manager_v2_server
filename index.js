@@ -44,6 +44,27 @@ async function run() {
             const result = await tasksCollection.updateOne(filter, updateDoc, option)
             res.send(result)
         })
+
+        app.put('/edittask/:id', async (req, res) => {
+            const id = req.params.id
+            const body = req.body
+            const filter = {
+                _id:ObjectId(id)
+            }
+            const option = { upsert: true }
+            const updateDoc = {
+                $set: {
+                    title: body.title,
+                    details: body.details,
+                    image:body.image
+                }
+            }
+
+            const result = await tasksCollection.updateOne(filter, updateDoc, option)
+            res.send(result)
+
+        })
+
         app.put('/notcompletetask/:id', async (req, res) => {
             const id = req.params.id;
             const filter = { _id: ObjectId(id) }
