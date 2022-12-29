@@ -48,7 +48,19 @@ async function run() {
             const result = await tasksCollection.updateOne(filter, updateDoc, option)
             res.send(result)
         })
-
+        app.put('/addComments/:id', async (req, res) => {
+            const id = req.params.id;
+            const body = req.body
+            const query = { _id: ObjectId(id) }
+            const option = { upsert: true }
+            const updateDoc = {
+                $set: {
+                    comments:body.comment
+                }
+            }
+            const result = await tasksCollection.updateOne(query, updateDoc, option)
+            res.send(result)
+        })
         app.put('/edittask/:id', async (req, res) => {
             const id = req.params.id
             const body = req.body
